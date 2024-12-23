@@ -1,0 +1,7 @@
+# 排除所有 node_modules 目录
+**/node_modules/
+
+# 其他常见忽略项
+.DS_Store
+*.log
+*.env
