@@ -1,6 +1,6 @@
-from 极验三代滑块模式验证码.tools.TrajectorySimulation import *
-from 极验三代滑块模式验证码.tools.identifyImg import *
-from 极验三代滑块模式验证码.tools.tool import *
+from geetest_v3_slide_crack.tools.TrajectorySimulation import *
+from geetest_v3_slide_crack.tools.identifyImg import *
+from geetest_v3_slide_crack.tools.tool import *
 
 # 配置
 CONFIG = {
