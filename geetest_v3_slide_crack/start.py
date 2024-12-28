@@ -1,6 +1,9 @@
-from geetest_v3_slide_crack.tools.TrajectorySimulation import *
-from geetest_v3_slide_crack.tools.identifyImg import *
-from geetest_v3_slide_crack.tools.tool import *
+import os
+import sys
+from tools.TrajectorySimulation import *
+from tools.identifyImg import *
+from tools.tool import *
+
 
 # 配置
 CONFIG = {
