@@ -1910,9 +1910,6 @@ function get_w3(gt2, challenge2, random_str, distance, pass_time, trace, c, s, r
     let o = V["encrypt"](JSON.stringify(param), random_str);
     let h = m["$_FEX"](o);
     let w = h + u;
-    w = w.replace(/\ +/g, "");//去掉空格
-    w = w.replace(/[ ]/g, "");    //去掉空格
-    w = w.replace(/[\r\n]/g, "");//去掉回车换行
     return w;
 }
 
