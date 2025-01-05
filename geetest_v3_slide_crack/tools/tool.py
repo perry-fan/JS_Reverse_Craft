@@ -80,7 +80,7 @@ def register_slide():
         "Hm_lpvt_25b04a5e7a64668b9b88e2711fb5f0c4": "1734855808",
         "HMACCOUNT": "4FB6D0D55FD23D59"
     }
-    url = "https://www.geetest.com/demo/gt/register-slide"
+    url = "https://demos.geetest.com/gt/register-slide"
     params = {
         "t": get_timestamp()
     }
@@ -360,7 +360,7 @@ def login(challenge, validate):
             "Hm_lpvt_25b04a5e7a64668b9b88e2711fb5f0c4": "1734855808",
             "HMACCOUNT": "4FB6D0D55FD23D59"
         }
-        url = "https://www.geetest.com/demo/gt/validate-slide"
+        url = "https://demos.geetest.com/gt/validate-slide"
         data = {
             "geetest_challenge": challenge,
             "geetest_validate": validate,

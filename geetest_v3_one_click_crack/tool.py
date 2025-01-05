@@ -57,7 +57,7 @@ def get_cookies():
 def register_full_page():
     """注册全页面"""
     try:
-        url = "https://www.geetest.com/demo/gt/register-fullpage"
+        url = "https://demos.geetest.com/gt/register-fullpage"
         params = {"t": get_timestamp()}
         response = requests.get(url, headers=get_headers("register"), cookies=get_cookies(), params=params)
         response.raise_for_status()
@@ -120,7 +120,7 @@ def valid(gt, challenge, w):
 def login(challenge, validate):
     """模拟用户登录"""
     try:
-        url = "https://www.geetest.com/demo/gt/validate-fullpage"
+        url = "https://demos.geetest.com/gt/validate-fullpage"
         data = {
             "geetest_challenge": challenge,
             "geetest_validate": validate,
