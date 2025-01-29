@@ -1,88 +1,78 @@
+from tools.tool import *
+from bs4 import BeautifulSoup
 import requests
-import json
+
+CONFIG = {
+    "js_env_path": './tools/env.js',
+    "js_pre_path": './tools/pre.js',
+}
 
 
-headers = {
-    "accept": "application/json, text/javascript",
-    "accept-language": "zh-CN,zh;q=0.9",
-    "b30cd2": "23e94822e1912bd883921d020e6984dcfcecee09",
-    "cache-control": "no-cache",
-    "content-type": "application/json",
-    "csht;": "",
-    "origin": "https://m.flight.qunar.com",
-    "pragma": "no-cache",
-    "pre": "b9d6302e-f9e516-9344e864-82b92c90-5d4c70fb5853",
-    "priority": "u=1, i",
-    "referer": "https://m.flight.qunar.com/ncs/page/flightlist?depCity=%E5%8C%97%E4%BA%AC&arrCity=%E4%B8%8A%E6%B5%B7&goDate=2025-01-06&from=touch_index_search&child=0&baby=0&cabinType=0",
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "same-origin",
-    "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",
-    "wps": "21",
-    "x-requested-with": "XMLHttpRequest"
-}
-cookies = {
-    "QN1": "00014880306c69887fd89081",
-    "QN99": "3356",
-    "QN205": "s%3Dbaidu",
-    "QunarGlobal": "10.80.148.213_-310e495_1942bd1aa31_-5f80|1736083976718",
-    "QN269": "92D175A2CB6911EFB7B1B27797673177",
-    "fid": "402ca3b5-53f1-4d84-be9d-3334724517cf",
-    "QN48": "tc_c4221e8d2333f66e_19436ab5493_aa57",
-    "QN601": "b3ead768643cdae4a2052405f500165b",
-    "quinn": "18a02bf6edef77e8d485d25690e8487889495f21eb6b5d31b42b69dd537d3aee8977d11930cf5d56d536f23a75247718",
-    "ariaDefaultTheme": "null",
-    "QN100": "WyLpqazmnaXopb%2Fkupp85YyX5LqsIl0%3D",
-    "QN277": "organic",
-    "QN162": "%E5%8C%97%E4%BA%AC",
-    "QN243": "77",
-    "ctt_june": "1683616182042##iK3waKj%2BahPwawPwa%3DPOasHhaKkDWsvAXPaOEKgnE2PsED3NWRX8WR0GW%3DX%2BiK3siK3saKgsWSvmWRa%3DaKa%2BahPwaUvt",
-    "QN300": "wx",
-    "Alina": "90c4e48d-58fd70-694edd65-33b98271-528c677a8d6c",
-    "QN271AC": "register_pc",
-    "QN271SL": "4d109f4265fe440c9b79a32263f79db1",
-    "QN271RC": "4d109f4265fe440c9b79a32263f79db1",
-    "_q": "U.qpxouyq4959",
-    "csrfToken": "PkSBxPgRAjwdnikjVnvwlcregL0nsyqa",
-    "_s": "s_5L35DLNNNHGBVYPVN7CVOOAL5M",
-    "_t": "29044203",
-    "_v": "VCIfGO5215-8YAQSt056SQN17HHd9PdZUSA0602iXVriNAKoP3AykdThITirpc65FNKknj-Ui2OB5nuDvJrNuceXdjyS7Bl3s2WN86FVXJc2EUTAX8Wy0jqJKMdmBHN9TsTI_1-1PN0JnBiPw3Y7L5qxrTcDkzq0vzRqGhJ9mj_K",
-    "QN43": "\"\"",
-    "QN42": "%E5%8E%BB%E5%93%AA%E5%84%BF%E7%94%A8%E6%88%B7",
-    "_i": "DFiEZn8JNdfDWCHL_LEmmxpzEMUw",
-    "_vi": "pa_bCyX6jB-WPn1biyWjsq6NVv100bq2PeOmJt4p7Dy-SYCyYwKfgi2TkoPimCIaarWACg1mW4O02b-_R5lq-2cbNYnRN6fj0mPAU7Fnn5PzsW9_SAff4o01lkQCc80aD8D-Rf-j3XkvVEhYIP3f7J6huavpoeM-rvK_cE6IsI9u",
-    "11344": "1722403391463##iK3wWR2nWwPwawPwasiRasvAXSfGaS0GXPPNXsvNVDXnE2jOW%3DGDX2ihERiIiK3siK3saKgsWSvmWKtnWSa8ahPwaUvt",
-    "11536": "1722403391463##iK3wVRj%3DWwPwawPwasv8asPwWRDwESkIVPD%3DaRjnW2EDERfDWPjsa2XsVR3NiK3siK3saKgsWSvmWRv8VK2%2BaUPwaUvt",
-    "QN621": "1490067914133%2Ctestssong%3DDEFAULT%26fr%3Dtouch_index_search",
-    "QN668": "51%2C57%2C53%2C56%2C51%2C57%2C54%2C58%2C54%2C57%2C50%2C59%2C59",
-    "ctf_june": "1683616182042##iK3wWRD%3DauPwawPwasGRXPEGESkhaPWTXPiIEKHGX%3DiIERoTERtwVPXAastOiK3siK3saKgsWSD%2BWRt%3DWsaNawPwaUvt",
-    "cs_june": "693aedc26a7f0b0f8b0422f4dc958d3b9163debd791e4115d85693880fe73993e307578405e70322e1f73468b1b9503c0a0ca753080fdbf662d79e82b3d8d200b17c80df7eee7c02a9c1a6a5b97c117995de49933abca9dfe76911d92c2d01185a737ae180251ef5be23400b098dd8ca",
-    "F235": "1736174869348"
-}
-url = "https://m.flight.qunar.com/flight/api/touchInnerList"
-data = {
-    "arrCity": "上海",
-    "baby": "0",
-    "cabinType": "0",
-    "child": "0",
-    "depCity": "北京",
-    "from": "touch_index_search",
-    "goDate": "2025-01-12",
-    "firstRequest": False,
-    "startNum": 0,
-    "sort": 5,
-    "r": 1736174869708,
-    "_v": 2,
-    "underageOption": "",
-    "st": 1736174848186,
-    "more": 1,
-    "backDate": None,
-    "isChangeDate": True,
-    "Bella": "1683616182042##fbb257548f5066f1d57136883b46a8e2a577146f##iKohiK3wgMkMf-i0gUPwaUPsXuPwaUPwaUPwXwPwa5TQjOWxcI10aS30a=D0aS3wWsamiK3siK3saPGhWKXwERoTWsiDVRvNXUPwawPwasD+asjnWsXmWS2+aKD0aS30a2a0aSisyI0wcIkNiK3wiKWTiK3wW9D=WIEMaRP+fK2mWI3NjKHMj9Dwa9XsjOPnf9Dna930aS30a2a0aSi=y-ELfuPwaUPsXuPwaUkGWuPmEukhXUkGWuPNawkTXukGWuPmWhkhEUkGWwkhEhPNaukGWUPNXwkhXukGWwkTWukTVhkGWUPNXwPmEhkGWuPmXukTauPwaUPwXwPwaMe0d-oxgMEsiK3wiKWTiK3wiKiRiPPAiKHGiPihiPPNiKtwiPDsiPPAiKt=iPiIiKiRiPPmiKtmiPGTiPP+iKHIiPGDiPPOiK0IiPDAiPPmiPGIiPDwiKiRiK3wiKiRiK3wfIksj+iQgCEQcOm0aS30a=D0aS30EKP0VDP0X230EKP0VKa0XPD0EKP0VRX0X2jpP-kbj-3bjOFeJukGVukTawPNEukGWUPNXwkhXukGWwkTWukTVhPwXwkGWwPmVukhVukGWhkhXUkhWwPwaUPwXwPwaMHxg+X0aS30a=D0aSieqMfLy9opohNno9NHgUNScO=0aS30a2a0aSisj+iQgCEKgMa0aS30a=D0WP30aSi+f9iwf-Wxo-iSfuNSq9W=iK3wiKiRiK3wjOFec9Fbq5GAcMGwd5pbjwPwaUPAEhP+Ehvt##pYuREBTxZGhlDTI2Cf7yT##arrCity,baby,cabinType,child,depCity,from,goDate,firstRequest,startNum,sort,r,_v,underageOption,st,more,backDate,isChangeDate",
-    "__m__": "d2715c9f5c6e0189bf16ec07507ee6e0"
-}
-data = json.dumps(data, separators=(',', ':'))
-response = requests.post(url, headers=headers, cookies=cookies, data=data)
+def get_flight_js():
+    headers = {
+        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        "accept-language": "zh-CN,zh;q=0.9",
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "priority": "u=0, i",
+        "sec-ch-ua": "\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "sec-fetch-dest": "document",
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-site": "same-origin",
+        "sec-fetch-user": "?1",
+        "upgrade-insecure-requests": "1",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36"
+    }
+    cookies = {
+        "QN1": "000102802f1069cd64082ba6",
+        "QN48": "551e2039-eaf5-42e0-89f2-674df3b68b96",
+        "QN300": "organic",
+        "ctt_june": "1683616182042##iK3wWSX%3DauPwawPwasWRa%3DXwEP3OERgsWstmWSt%2BWRjnEREDEDiRWSXAXsg%3DiK3siK3saKgsWSj%3DVRawaKv8aUPwaUvt",
+        "Alina": "c5d51773-0a0196-11422713-8690e003-558967832681",
+        "QN601": "8759d566e70f9da389e00be4a77ba010",
+        "quinn": "6ad53805188d57deeab79468313106ae35f17a03bc3c4f57130e50761f4d212cf0fd320009eceffa50fec6929c709cc6",
+        "QN621": "fr%3Dtouch_index_search",
+        "F235": "1738118404960",
+        "QN668": "51%2C57%2C53%2C58%2C51%2C56%2C52%2C52%2C52%2C59%2C50%2C53%2C55",
+        "ctf_june": "1683616182042##iK3waS2mWwPwawPwa%3DEGaPGGWsHREPkDEPjsXPGTWS2NWPWGWKfhXKt8asHhiK3siK3saKgsVRDOaS3wVKX%2BaUPwaUvt",
+        "cs_june": "42698fa1eded19d7c1c3bd2b58a33a517150cc80a75fc4e541c3b91e58f5fc97b28517b9e90095deb7261a7e6ee1fbe8727a8a22efde110d05bc1541e857487eb17c80df7eee7c02a9c1a6a5b97c1179f1d84112f578a016a66f2167abf97f665a737ae180251ef5be23400b098dd8ca"
+    }
+    url = "https://m.flight.qunar.com/ncs/page/flightlist"
+    params = {
+        "depCity": "北京",
+        "arrCity": "上海",
+        "goDate": "2025-01-30",
+        "from": "touch_index_search",
+        "child": "0",
+        "baby": "0",
+        "cabinType": "0",
+        "_firstScreen": "1",
+        "_gogokid": "12"
+    }
+    response = requests.get(url, headers=headers, cookies=cookies, params=params)
 
-print(response.text)
-print(response)
+    html_content = response.text
+    # 解析 HTML
+    soup = BeautifulSoup(html_content, 'html.parser')
+
+    # 获取所有 <script> 标签的内容（不含 src 的内联脚本）
+    scripts = [script.string for script in soup.find_all('script') if script.string]
+    js_code = scripts[0]
+
+    pattern = r"(\w+\['test'\]\(\w+\['removeCookie'\]\['toString'\]\(\)\)\s*;?)"
+    # 替换匹配到的部分为 `true`
+    modified_js = re.sub(pattern, "true;", js_code)
+    pattern2 = r"(\w+\['[^']+'\]\(\(\!\!\[\]\s*\+\s*''\)\[0x3\]\))"
+    # 替换匹配到的部分为 `3`
+    modified_js = re.sub(pattern2, "3", modified_js)
+
+    env_code = read_js_file(CONFIG['js_env_path'])
+    modified_js = env_code + '\n' + modified_js + '\n' + 'console.log(window._pt_)'
+    write_js_file(CONFIG['js_pre_path'], modified_js)
+    # print(modified_js)
+
+
+if __name__ == '__main__':
+    get_flight_js()
