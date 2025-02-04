@@ -18,6 +18,9 @@ import execjs
 # 配置
 CONFIG = {
     "get_bella_path": './get_bella.js',
+    "js_enc_path": './tools/enc.js',
+    "img_bg_path": './img/乱序缺口背景图.jpg',
+    "img_slice_path": './img/滑块.png'
 }
 
 
@@ -26,6 +29,15 @@ def read_js_file(file_path):
     try:
         with open(file_path, "r", encoding="utf-8") as file:
             return file.read()
+    except Exception as e:
+        logger.error(f"Error reading {file_path}: {e}")
+        return None
+
+
+def write_js_file(file_path, source_code):
+    try:
+        with open(file_path, "w", encoding="utf-8") as file:
+            return file.write(source_code)
     except Exception as e:
         logger.error(f"Error reading {file_path}: {e}")
         return None
@@ -53,7 +65,3 @@ def call_js_function(js_file_path, function_name, *args):
     result = js_ctx.call(function_name, *args)
     # logger.info(f"Called {function_name} with arguments {args}, result: {result}")
     return result
-
-
-
-
