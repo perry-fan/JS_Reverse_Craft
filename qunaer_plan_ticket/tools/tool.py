@@ -17,6 +17,7 @@ import execjs
 
 # 配置
 CONFIG = {
+    "get_bella_path": './get_bella.js',
     "js_enc_path": './tools/enc.js',
     "img_bg_path": './img/乱序缺口背景图.jpg',
     "img_slice_path": './img/滑块.png'

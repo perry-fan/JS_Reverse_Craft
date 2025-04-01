@@ -1,11 +1,17 @@
+from get_shirley import *
 from tools.tool import *
 from bs4 import BeautifulSoup
 import requests
-
+# 配置
 CONFIG = {
-    "js_env_path": './tools/env.js',
-    "js_pre_path": './tools/pre.js',
+    "get_bella_path": './get_bella.js',
 }
+
+def start():
+    shirley, api_token = get_shirley()
+    print(shirley, api_token)
+    bella = call_js_function(CONFIG["get_bella_path"], "get_bella", shirley)
+    print(bella)
 
 
 def get_flight_js():
@@ -76,3 +82,4 @@ def get_flight_js():
 
 if __name__ == '__main__':
     get_flight_js()
+    start()
