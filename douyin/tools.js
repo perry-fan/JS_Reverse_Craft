@@ -1,5 +1,5 @@
 const timestamp = Date.now();
-fixArr = [20, 1, 1, 0, 1, null, 4, 175, 11881, 6383, "1.0.1.19-fix.01"]
+fixArr = [20, 1, 1, 0, 1, null, 4, 175, 11881, 6383, "1.0.1.19-fix.01"]//鼠标轨迹
 let fixArr2 = [145, 110, 66, 189, 44, 211, 0]
 
 function get_random_pre_for_base64() {
@@ -230,7 +230,7 @@ let getLen50Arr = function getLen50Arr(reqParamsArr, dhzxParamsArr, userAgentArr
 }
 
 function calculateDateTime() {
-    return (parseFloat(Date.now()) - 1721836800000) / 1000 / 60 / 60 / 24 / 14 >> 0;
+    return (parseFloat(timestamp) - 1721836800000) / 1000 / 60 / 60 / 24 / 14 >> 0;
 }
 
 let getArr = function getArr(paramArr) {
