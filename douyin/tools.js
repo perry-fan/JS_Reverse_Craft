@@ -1,6 +1,6 @@
 const timestamp = Date.now();
-
-const mouseTrackArr = [20, 1, 1, 0, 1, null, 4, 175, 11881, 6383, "1.0.1.19-fix.01"];
+let timestamp2 = null;
+const mouseTrackArr = [126, 0, 2, 0, 1, null, 4, 117, 6241, 6383, "1.0.1.19-fix.01"];//鼠标轨迹26,0,2,0，最后是固定1
 const mixSeedArr = [145, 110, 66, 189, 44, 211, 0];
 
 function getRandomByte(max = 255) {
@@ -14,10 +14,12 @@ function getMixedBits(value, ref) {
 }
 
 function getRandomPreForBase64() {
-    var seed1 = getRandomByte(255);
-    var seed2 = getRandomByte(40);
+    var random = Math.random() * 65535;
+    var seed1 = random & 255;
+    var seed2 = random >> 8 & 255;
+    var seed3 = (Math.random() * seed2) >> 0;
     var part1 = getMixedBits(seed1, 3);
-    var part2 = getMixedBits(seed2, 82);
+    var part2 = getMixedBits(seed3, 82);
     var result = part1.concat(part2);
     console.log("result pre:", result);
     return String.fromCharCode.apply(null, result);
@@ -43,14 +45,19 @@ function getTimeArr() {
     return arr;
 }
 
-function calculateDateTime() {
-    return ((timestamp - 1721836800000) / 1000 / 60 / 60 / 24 / 14) >> 0;
+function calculateDateTime(date) {
+    if (date !== undefined) {
+        timestamp2=date
+        return ((date - 1721836800000) / 1000 / 60 / 60 / 24 / 14) >> 0;
+    } else {
+        return ((timestamp - 1721836800000) / 1000 / 60 / 60 / 24 / 14) >> 0;
+    }
 }
 
 function getRandomPreForRc4Part1() {
     var rand = Math.random() * 65535;
-    var seed1 = rand & 255;
-    var seed2 = rand >> 8;
+    var seed1 = rand & 255;//12
+    var seed2 = rand >> 8;//233
 
     var result = getMixedBits(seed1, 1).concat(getMixedBits(seed2, 0));
     console.log("result part1:", result);
@@ -58,13 +65,13 @@ function getRandomPreForRc4Part1() {
 }
 
 function getRandomPreForRc4Part2() {
-    var byte = getRandomByte() & 77;
-    var modified = byte | (1 << 1) | (1 << 4) | (1 << 5) | (1 << 7);
+    var random = getRandomByte() & 77;
+    var seed1 = random | (1 << 1) | (1 << 4) | (1 << 5) | (1 << 7);//187
+    var seed2 = getRandomByte(240);//26
+    var part1 = getMixedBits(seed2, 1)
+    var part2 = getMixedBits(seed1, 0)
 
-    var rand = getRandomByte(240);
-    var adjusted = rand + (rand % 2) * 2;
-
-    var result = getMixedBits(adjusted, 1).concat(getMixedBits(modified, 0));
+    var result = part1.concat(part2);
     console.log("result part2:", result);
     return result;
 }
@@ -76,7 +83,7 @@ function getLastNumArr(reqParamsArr, dhzxParamsArr, userAgentArr, systemParamsAr
     }
 
     xorValue ^= 41;
-    xorValue ^= calculateDateTime();
+    xorValue ^= calculateDateTime(Date.now());
     xorValue ^= 6;
     xorValue ^= ((timestamp - timestamp + 3) & 255);
     xorValue ^= (timestamp & 255);
@@ -88,7 +95,7 @@ function getLastNumArr(reqParamsArr, dhzxParamsArr, userAgentArr, systemParamsAr
     xorValue ^= ((1 | +false << 6 | 0) % 256) & 255;
     xorValue ^= ((1 | +false << 6 | 0) / 256) & 255;
 
-    var fixSlice = mouseTrackArr.slice(0, 5);
+    var fixSlice = mouseTrackArr.slice(0, 5);//U[38]
     xorValue ^= fixSlice[4] & 255;
     xorValue ^= fixSlice[4] >> 8 & 255;
     xorValue ^= fixSlice[0];
@@ -148,7 +155,7 @@ function getLen50Arr(reqParamsArr, dhzxParamsArr, userAgentArr, systemParamsArr,
     var fixSlice = mouseTrackArr.slice(0, 5);
 
     arr[0] = (timestamp / 256 / 256 / 256 / 256 / 256) & 255;
-    arr[1] = (1 << 3 | 8) & 255;
+    arr[1] = (4 | 1 << 3) & 255;
     arr[2] = userAgentArr[11];
     arr[3] = (timestamp - 1) >> 8 & 255;
     arr[4] = 6383 >> 16 & 255;
@@ -167,7 +174,7 @@ function getLen50Arr(reqParamsArr, dhzxParamsArr, userAgentArr, systemParamsArr,
     arr[17] = (1 << 3 | 8 & 255) >> 24 & 255;
     arr[18] = timestamp >> 8 & 255;
     arr[19] = 6383 & 255;
-    arr[20] = calculateDateTime();
+    arr[20] = calculateDateTime(timestamp2);
     arr[21] = dhzxParamsArr[4];
     arr[22] = timestamp >> 24 & 255;
     arr[23] = 11881 >> 16 & 255;

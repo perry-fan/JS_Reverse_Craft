@@ -153,8 +153,8 @@ def req():
         "webid": "7455907028960364086",
         "uifid": "973a3fd64dcc46a3490fd9b60d4a8e663b34df4ccc4bbcf97643172fb712d8b05c8207ab7a0402be2f993623172fba41ff6cc39877dd02cf23ff682b5895c2b0273435ccd10f5501764f37d4bc40c7592e612a1ff5bb2c598051d2da4e46f92708353aecd8e8a1d4ead44c99718738b075e07b51e2402a7f6f93b3f2b6428dea89519908ac39c9037c192cfad8c8351a6c6b7eef867964390d9c142d2e8b28bc",
         "msToken": "MViRgqsO6-oyAy1uuEQj2QSZ7caFiqwWANrgU-w_c7OYyTnr9wQZg0mgVC1IQHfUK_6WvJp86402LOo5PQj8bGWwk9d4Sar41uZ3kf3q3ITLjxrgwjnv7nb2Eco6-YKWx7iiB5WsMIyXneF_qvVKQoalB903-PSZMlxeWqKEQKFSRlgLuv23Jg==",
-        "a_bogus": "mJ0jkq6LxdRnKV/SuCnXHI2l4Cy/NPuy6-ixSGPTtxY9TXlTXRP7pxeqcxzp28UPqRBsk9I7uEF/YExbOUXzZF9kompkuxhWi02Vng8oMqw1TMU8LHmmSg8zLwMu0bXia5cji1U51sMjIdo59qADAQ1GC5zw5Y62bNMIp/YyGDS8pT6Tnx2eecyAlqg="
-        # "a_bogus":a_bogus
+        # "a_bogus": "mJ0jkq6LxdRnKV/SuCnXHI2l4Cy/NPuy6-ixSGPTtxY9TXlTXRP7pxeqcxzp28UPqRBsk9I7uEF/YExbOUXzZF9kompkuxhWi02Vng8oMqw1TMU8LHmmSg8zLwMu0bXia5cji1U51sMjIdo59qADAQ1GC5zw5Y62bNMIp/YyGDS8pT6Tnx2eecyAlqg="
+        "a_bogus":a_bogus
     }
     response = requests.get(url, headers=headers, cookies=cookies, params=params)
 
