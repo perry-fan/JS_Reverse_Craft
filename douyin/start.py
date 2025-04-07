@@ -41,7 +41,7 @@ def call_js_function(js_file_path, function_name, *args):
 
 def req():
     a_bogus = call_js_function(CONFIG["js_enc_path"], "get_a_bogus")
-    logger.info(a_bogus)
+    logger.info(f"a_bogus：{a_bogus}")
 
     headers = {
         "accept": "application/json, text/plain, */*",
@@ -91,9 +91,7 @@ def req():
         "SearchMultiColumnLandingAbVer": "1",
         "SEARCH_RESULT_LIST_TYPE": "%22multi%22",
         "volume_info": "%7B%22isUserMute%22%3Afalse%2C%22isMute%22%3Atrue%2C%22volume%22%3A0.5%7D",
-        "stream_recommend_feed_params": "%22%7B%5C%22cookie_enabled%5C%22%3Atrue%2C%5C%22screen_width%5C%22%3A1707%2C%5C%22screen_height%5C%22%3A960%2C%5C%22browser_online%5C%22%3Atrue%2C%5C%22cpu_core_num%5C%22%3A16%2C%5C%22device_memory%5C%22%3A8%2C%5C%22downlink%5C%22%3A10%2C%5C%22effective_type%5C%22%3A%5C%224g%5C%22%2C%5C%22round_trip_time%5C%22%3A50%7D%22",
         "WallpaperGuide": "%7B%22showTime%22%3A1743265250383%2C%22closeTime%22%3A0%2C%22showCount%22%3A2%2C%22cursor1%22%3A41%2C%22cursor2%22%3A12%7D",
-        "SearchColumnSwitchLog": "%5B%7B%22date%22%3A%222025-03-30%22%2C%22latestColumnType%22%3A%22multi%22%7D%2C%7B%22date%22%3A%222025-03-31%22%2C%22latestColumnType%22%3A%22multi%22%7D%2C%7B%22date%22%3A%222025-04-01%22%2C%22latestColumnType%22%3A%22multi%22%7D%5D",
         "download_guide": "%223%2F20250401%2F0%22",
         "__ac_signature": "_02B4Z6wo00f01GoJLEQAAIDBtnCz8oZcnaRqKSjAAH1x41",
         "__live_version__": "%221.1.3.161%22",
@@ -102,25 +100,28 @@ def req():
         "device_web_cpu_core": "16",
         "device_web_memory_size": "8",
         "architecture": "amd64",
-        "strategyABtestKey": "%221743601826.746%22",
-        "sdk_source_info": "7e276470716a68645a606960273f276364697660272927676c715a6d6069756077273f276364697660272927666d776a68605a607d71606b766c6a6b5a7666776c7571273f275e58272927666a6b766a69605a696c6061273f27636469766027292762696a6764695a7364776c6467696076273f275e5827292771273f2736323d3d373d34353336313234272927676c715a75776a716a666a69273f2763646976602778",
-        "bit_env": "pDF-UXmraZsqJNRclzbcU99JbIBBrbnBfdEHxiSSwcs7uUqQ7dgQTT43u1DZAhCdbwh1lIS5w1lqf9WsFByUfa5GocU1PJrUp5WWUJDprXZLhUJjhIeuP50GT3kXSW9SuIv45yB337u_RJGlj1B-Hxahx1vMnfB0EMkkaAAmGjiuDsmBZnvsJESyKaLmiDCaATUQc9pSCAlV9kHMMJbNjqxm-9gPYc-axW5xFKsXWEMUoQOKWYmoNlwz0nroBVeT5qjIDUIxlqBUyQ0cjxqHRCSsDBdM4sYsDVUxI4ZodQNjBVEar8gIWgYpPqhOIdoZWGDceTt9IuoYKYA7ZCzVV5PzRN5pQ2TNy7RwvALkDgd3H5pbkhNOZvEMOlqw-ll6UOzYww62qoWnhj03RzUnXu9QYcwBiZgLbEXSdlKv8qf8G4twT68Ef9d25u6T8gwzPAJI5ZJzQGLRqWz4WMBbSHEBYQlQazfDy4pWGl-prtyXYp50hFRxVi0QOAvpT2Is",
+        "SearchColumnSwitchLog": "%5B%7B%22date%22%3A%222025-03-31%22%2C%22latestColumnType%22%3A%22multi%22%7D%2C%7B%22date%22%3A%222025-04-01%22%2C%22latestColumnType%22%3A%22multi%22%7D%2C%7B%22date%22%3A%222025-04-04%22%2C%22latestColumnType%22%3A%22multi%22%7D%5D",
+        "csrf_session_id": "2f22f5e6d0fd9283ac3f87ab5c8de6ef",
+        "stream_recommend_feed_params": "%22%7B%5C%22cookie_enabled%5C%22%3Atrue%2C%5C%22screen_width%5C%22%3A1707%2C%5C%22screen_height%5C%22%3A960%2C%5C%22browser_online%5C%22%3Atrue%2C%5C%22cpu_core_num%5C%22%3A16%2C%5C%22device_memory%5C%22%3A8%2C%5C%22downlink%5C%22%3A4.35%2C%5C%22effective_type%5C%22%3A%5C%224g%5C%22%2C%5C%22round_trip_time%5C%22%3A50%7D%22",
+        "strategyABtestKey": "%221743776161.56%22",
+        "biz_trace_id": "24ebe3b9",
+        "bd_ticket_guard_client_data": "eyJiZC10aWNrZXQtZ3VhcmQtdmVyc2lvbiI6MiwiYmQtdGlja2V0LWd1YXJkLWl0ZXJhdGlvbi12ZXJzaW9uIjoxLCJiZC10aWNrZXQtZ3VhcmQtcmVlLXB1YmxpYy1rZXkiOiJCRHg1bUk5VW5icy9oUXNwSG1PMXZTanVhSWsvQi9FWXJlU1FXYWNic3BBNkVDbk5RUWhYdVlrUDJvTHp2T09kL2M2c05hTnlydm1hcGFPZWdPQVZKYTg9IiwiYmQtdGlja2V0LWd1YXJkLXdlYi12ZXJzaW9uIjoyfQ%3D%3D",
+        "sdk_source_info": "7e276470716a68645a606960273f276364697660272927676c715a6d6069756077273f276364697660272927666d776a68605a607d71606b766c6a6b5a7666776c7571273f275e58272927666a6b766a69605a696c6061273f27636469766027292762696a6764695a7364776c6467696076273f275e5827292771273f2733343336333433323236313234272927676c715a75776a716a666a69273f2763646976602778",
+        "bit_env": "nN4vfW07YMbARPOwwRiSGqSxO8Uf01XjnLqFgSkU3-Q58W5K7UblyGT6AaEo_Xu4h_Sro9rt8SKYrWWoGO2r6Cd6H9LpbZGsXdwh_U295ZBfaHxPtw12nkwCTFKiPig6DfETebv9Jczzf-8IKGkU1qpRgiJ1Rqk1y4TSbB7TaHiD5Dg8KujSx4xYWUVsVvB4A3hIUvgEYHDstu0-dj7LmLZWzYNqk-OhNUF-usBge8-mshZCmmHzCxIsJmf5s9jLINgpHjbvbFY7KGYVvELBMCVQuTJZBWLKs9yAE0QKKo-st2jxEEn-d73V4UHmzBBcgqLckjQ15rdiveEeMTdLQdKXaxhRoBWX8mqnJDbn9igUdAij04PyJT0V5qWGyvBtM5iFHEunhrdHPTkjJjBpvLyWyjJHwuV_Oq0XWVpnavQgbvDMua7A1E8qTzO0a5PV7cerYB0Qx-WXn01eVVCPogTEYxsgyHVtS_w5ZtalDVKsqP1XzcJBj90hLoi5Kc4u",
         "gulu_source_res": "eyJwX2luIjoiMmQ5MTFmM2RkNDk5NGRjZTY2ODA4ZjlkNGE3MzBkYWRjOGM3ZjBlYTZhNmVkODY3N2U4ZDcwOGExYWMwMzA5MSJ9",
-        "passport_auth_mix_state": "pqh36wrjnquwpw3gkrmb85hvhayl0x83",
-        "xg_device_score": "7.562538484225193",
-        "IsDouyinActive": "true",
-        "stream_player_status_params": "%22%7B%5C%22is_auto_play%5C%22%3A0%2C%5C%22is_full_screen%5C%22%3A0%2C%5C%22is_full_webscreen%5C%22%3A0%2C%5C%22is_mute%5C%22%3A1%2C%5C%22is_speed%5C%22%3A1%2C%5C%22is_visible%5C%22%3A1%7D%22",
+        "passport_auth_mix_state": "cotbgnypvysb9953m1bg7hd0mvm57ipq",
         "home_can_add_dy_2_desktop": "%221%22",
-        "biz_trace_id": "ffa8aa4f",
-        "bd_ticket_guard_client_data": "eyJiZC10aWNrZXQtZ3VhcmQtdmVyc2lvbiI6MiwiYmQtdGlja2V0LWd1YXJkLWl0ZXJhdGlvbi12ZXJzaW9uIjoxLCJiZC10aWNrZXQtZ3VhcmQtcmVlLXB1YmxpYy1rZXkiOiJCRHg1bUk5VW5icy9oUXNwSG1PMXZTanVhSWsvQi9FWXJlU1FXYWNic3BBNkVDbk5RUWhYdVlrUDJvTHp2T09kL2M2c05hTnlydm1hcGFPZWdPQVZKYTg9IiwiYmQtdGlja2V0LWd1YXJkLXdlYi12ZXJzaW9uIjoyfQ%3D%3D"
+        "xg_device_score": "7.627371509122499",
+        "stream_player_status_params": "%22%7B%5C%22is_auto_play%5C%22%3A0%2C%5C%22is_full_screen%5C%22%3A0%2C%5C%22is_full_webscreen%5C%22%3A0%2C%5C%22is_mute%5C%22%3A1%2C%5C%22is_speed%5C%22%3A1%2C%5C%22is_visible%5C%22%3A1%7D%22",
+        "IsDouyinActive": "true"
     }
     url = "https://www.douyin.com/aweme/v1/web/comment/list/reply/"
     params = {
         "device_platform": "webapp",
         "aid": "6383",
         "channel": "channel_pc_web",
-        "item_id": "7460087437860097339",
-        "comment_id": "7460714787208250172",
+        "item_id": "7470358942426729769",
+        "comment_id": "7488481029427643194",
         "cut_version": "1",
         "cursor": "0",
         "count": "3",
@@ -147,14 +148,13 @@ def req():
         "cpu_core_num": "16",
         "device_memory": "8",
         "platform": "PC",
-        "downlink": "10",
+        "downlink": "4.35",
         "effective_type": "4g",
         "round_trip_time": "50",
         "webid": "7455907028960364086",
         "uifid": "973a3fd64dcc46a3490fd9b60d4a8e663b34df4ccc4bbcf97643172fb712d8b05c8207ab7a0402be2f993623172fba41ff6cc39877dd02cf23ff682b5895c2b0273435ccd10f5501764f37d4bc40c7592e612a1ff5bb2c598051d2da4e46f92708353aecd8e8a1d4ead44c99718738b075e07b51e2402a7f6f93b3f2b6428dea89519908ac39c9037c192cfad8c8351a6c6b7eef867964390d9c142d2e8b28bc",
-        "msToken": "MViRgqsO6-oyAy1uuEQj2QSZ7caFiqwWANrgU-w_c7OYyTnr9wQZg0mgVC1IQHfUK_6WvJp86402LOo5PQj8bGWwk9d4Sar41uZ3kf3q3ITLjxrgwjnv7nb2Eco6-YKWx7iiB5WsMIyXneF_qvVKQoalB903-PSZMlxeWqKEQKFSRlgLuv23Jg==",
-        "a_bogus": "mJ0jkq6LxdRnKV/SuCnXHI2l4Cy/NPuy6-ixSGPTtxY9TXlTXRP7pxeqcxzp28UPqRBsk9I7uEF/YExbOUXzZF9kompkuxhWi02Vng8oMqw1TMU8LHmmSg8zLwMu0bXia5cji1U51sMjIdo59qADAQ1GC5zw5Y62bNMIp/YyGDS8pT6Tnx2eecyAlqg="
-        # "a_bogus":a_bogus
+        "msToken": "Fq_O2gMSnb3GpDCkILKu13W5-F6tOJEnY6mbs-zW_xkEODBUQgMX-c6sJKJf5K0nTMGXKhjC-XTw9gNmrWSui00xXPpZHROvFHfvcXRoovxNWC8cf0AzCI1F6o6-BUe9m_AGd9RHmMuUplnns8DbFjupphDGs-iaiZVt2CWkmdx5yVJqESL-BA==",
+        "a_bogus": a_bogus,
     }
     response = requests.get(url, headers=headers, cookies=cookies, params=params)
 

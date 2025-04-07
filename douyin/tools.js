@@ -1,6 +1,28 @@
+// Date.now = function now() {
+//     return 1743601971840
+// };
+// Date.parse = function () {
+//     return 1743601971840
+// };
+// Date.prototype.valueOf = function () {
+//     return 1743601971840
+// };
+// Date.prototype.getTime = function () {
+//     return 1743601971840
+// };
+// Date.prototype.toString = function () {
+//     return 1743601971840
+// };
+// Performance.prototype.now = function now() {
+//     return Number('1743601971840'.slice(8))
+// }
+// Math.random = function random() {
+//     return 0.30596978909993866
+// };
+
 const timestamp = Date.now();
 
-const mouseTrackArr = [20, 1, 1, 0, 1, null, 4, 175, 11881, 6383, "1.0.1.19-fix.01"];
+const mouseTrackArr = [126, 0, 2, 0, 1, null, 4, 117, 6241, 6383, "1.0.1.19-fix.01"];
 const mixSeedArr = [145, 110, 66, 189, 44, 211, 0];
 
 function getRandomByte(max = 255) {
@@ -19,6 +41,7 @@ function getRandomPreForBase64() {
     var part1 = getMixedBits(seed1, 3);
     var part2 = getMixedBits(seed2, 82);
     var result = part1.concat(part2);
+    // var result = [35, 19, 112, 6]
     console.log("result pre:", result);
     return String.fromCharCode.apply(null, result);
 }
@@ -96,9 +119,10 @@ function getLastNumArr(reqParamsArr, dhzxParamsArr, userAgentArr, systemParamsAr
     xorValue ^= fixSlice[2];
     xorValue ^= fixSlice[3];
 
-    xorValue ^= (1 << 3 | 8) & 255;
-    xorValue ^= ((1 << 3 | 8 & 255) >> 16) & 255;
-    xorValue ^= ((1 << 3 | 8) >> 24) & 255;
+    xorValue ^= (0 | 1 << 2) | (1 << 3) & 255;
+    xorValue ^= ((0 | 1 << 2) | (1 << 3) & 255) >> 8 & 255;
+    xorValue ^= ((0 | 1 << 2) | (1 << 3) & 255) >> 16 & 255;
+    xorValue ^= ((0 | 1 << 2) | (1 << 3) & 255) >> 24 & 255;
 
     xorValue ^= reqParamsArr[9];
     xorValue ^= reqParamsArr[18];
@@ -122,13 +146,13 @@ function getLastNumArr(reqParamsArr, dhzxParamsArr, userAgentArr, systemParamsAr
 
     xorValue ^= 3;
 
-    var val1 = 11881;
+    var val1 = mouseTrackArr[8];
     xorValue ^= val1 & 255;
     xorValue ^= val1 >> 8 & 255;
     xorValue ^= val1 >> 16 & 255;
     xorValue ^= val1 >> 24 & 255;
 
-    var val2 = 6383;
+    var val2 = mouseTrackArr[9];
     xorValue ^= val2 & 255;
     xorValue ^= val2 >> 8 & 255;
     xorValue ^= val2 >> 16 & 255;
@@ -148,10 +172,10 @@ function getLen50Arr(reqParamsArr, dhzxParamsArr, userAgentArr, systemParamsArr,
     var fixSlice = mouseTrackArr.slice(0, 5);
 
     arr[0] = (timestamp / 256 / 256 / 256 / 256 / 256) & 255;
-    arr[1] = (1 << 3 | 8) & 255;
+    arr[1] = (0 | 1 << 2 | 1 << 3) & 255;
     arr[2] = userAgentArr[11];
     arr[3] = (timestamp - 1) >> 8 & 255;
-    arr[4] = 6383 >> 16 & 255;
+    arr[4] = mouseTrackArr[9] >> 16 & 255;
     arr[5] = timestamp & 255;
     arr[6] = 11881 >> 24 & 255;
     arr[7] = (1 << 3 | 8) >> 8 & 255;
@@ -160,7 +184,7 @@ function getLen50Arr(reqParamsArr, dhzxParamsArr, userAgentArr, systemParamsArr,
     arr[10] = fixSlice[4] & 255;
     arr[11] = 3;
     arr[12] = reqParamsArr[3];
-    arr[13] = 11881 >> 8 & 255;
+    arr[13] = mouseTrackArr[8] >> 8 & 255;
     arr[14] = (timestamp - timestamp + 3) & 255;
     arr[15] = reqParamsArr[9];
     arr[16] = (timestamp - 1) / 256 / 256 / 256 / 256 & 255;
@@ -169,22 +193,22 @@ function getLen50Arr(reqParamsArr, dhzxParamsArr, userAgentArr, systemParamsArr,
     arr[19] = 6383 & 255;
     arr[20] = calculateDateTime();
     arr[21] = dhzxParamsArr[4];
-    arr[22] = timestamp >> 24 & 255;
-    arr[23] = 11881 >> 16 & 255;
+    arr[22] = timestamp >> 16 & 255;
+    arr[23] = mouseTrackArr[8] >> 16 & 255;
     arr[24] = userAgentArr[5];
     arr[25] = fixSlice[0];
     arr[26] = (timestamp - 1) >> 16 & 255;
     arr[27] = (timestamp - 1) >> 24 & 255;
     arr[28] = 6;
-    arr[29] = 6383 >> 8 & 255;
+    arr[29] = mouseTrackArr[9] >> 8 & 255;
     arr[30] = fixSlice[1];
-    arr[31] = 6383 >> 24 & 255;
+    arr[31] = mouseTrackArr[9] >> 24 & 255;
     arr[32] = userAgentArr[21];
     arr[33] = dhzxParamsArr[10];
     arr[34] = fixSlice[2];
     arr[35] = fixSlice[4] >> 8 & 255;
     arr[36] = timestamp / 256 / 256 / 256 / 256 & 255;
-    arr[37] = 11881 & 255;
+    arr[37] = mouseTrackArr[8] & 255;
     arr[38] = dhzxParamsArr[19];
     arr[39] = fixSlice[3];
     arr[40] = ((timestamp - 1) / 256 / 256 / 256 / 256 / 256) & 255;
