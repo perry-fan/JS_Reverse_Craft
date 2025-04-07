@@ -69,7 +69,6 @@ function base64Encode2(input) {
 
 function base64Decode(encoded) {
     const base64Chars = 'ckdp1h4ZKsUB80/Mfvw36XIgR25+WQAlEi7NLboqYTOPuzmFjJnryx9HVGDaStCe';
-
     // 去除填充字符 '='
     let sanitizedInput = encoded.replace(/=/g, '');
 

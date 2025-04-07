@@ -2,7 +2,7 @@ const rc4 = require('./rc4魔改')
 const base64 = require('./base64魔改')
 const tools = require('./tools');
 const sm3 = require('./sm3');
-const {base64Encode} = require("./base64魔改");
+const {base64Encode, base64Decode} = require("./base64魔改");
 
 let ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36'
 let key = String.fromCharCode.apply(null, [0.00390625, 1, 12]);
@@ -48,15 +48,19 @@ function get_a_bogus() {
     let lastNumArr = tools.getLastNumArr(reqParamsArr, dhzxParamsArr, userAgentArr, systemParamsArr, rc4_arr_pre, timeArr)
     let len50Arr = tools.getLen50Arr(reqParamsArr, dhzxParamsArr, userAgentArr, systemParamsArr, timeArr)
 
-    let paramArr = len50Arr.concat(systemParamsArr).concat(timeArr).concat(lastNumArr)
+    let paramArr = len50Arr.concat(systemParamsArr).concat(timeArr).concat(lastNumArr)//96位数组
     console.log("paramArr:", paramArr)
-    let rc4EncArr = tools.getArr(paramArr);
-    let totalEncArr = rc4_arr_pre.concat(rc4EncArr);
-    console.log("totalEncArr:", totalEncArr)
+
+    let rc4EncArr = tools.getArr(paramArr);//128位数组
+    let totalEncArr = rc4_arr_pre.concat(rc4EncArr);//136位数组
+    console.log("totalEncArr:%s\nLen:%s", totalEncArr,totalEncArr.length)
+
     let rc4Result = rc4.rc4(key2, String.fromCharCode.apply(null, totalEncArr));
     console.log("rc4Result:", rc4Result)
+
     let rc4Total = randomPreForBase64 + rc4Result
     console.log("rc4Total:", rc4Total)
+
     let a_bogus = base64.base64Encode2(rc4Total)
     console.log("a_bogus:", a_bogus);
     return a_bogus;
