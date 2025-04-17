@@ -11,8 +11,10 @@
 | `极验三代滑块` | ❌ | ` 抖音a_Bogus v1.0.1.19` | ✔️  |
 | `极验一键通过` | ✔️  | ` 今日头条 _signature`     | ✔️ |
 
+作者精力有限，失效的案例，会尽量及时更新。
+
 ## 运行方式
-先入进入对应的案例目录，比如geetest_v4_one_click_crack，然后执行以下命令
+先入进入对应的案例目录，比如geetest_v3_one_click_crack，然后执行以下命令
 ### 1、安装node依赖
 `npm install`
 ### 2、安装python依赖
